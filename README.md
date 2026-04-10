@@ -1,4 +1,4 @@
-# DISA-STIGS-Scripts
+# DISA-STIGS-Remediation-Scripts
 
 
 | STIG ID          | Description                   | Language   | Link                                                    
