@@ -1,7 +1,7 @@
 # DISA-STIGs-Remediation-Scripts
 
 
-| STIG ID          | Title                   | Description                   | Language   | Link                                                    
+| STIG ID          | Title                   | Description                   | Script   | Link                                                    
 |------------------|-------------------------|-------------------------------|-----------|-------------
 | WN11-AU-000500   | The Application event log size must be configured to 32768 KB or greater | Inadequate log size will cause the log to fill up quickly. This may prevent audit events from being recorded properly and require frequent attention by administrative personnel | PowerShell | [View Remediation](https://github.com/stowett/DISA-STIGS-Scripts/blob/main/WN11-AU-000500.ps1)|
 | WN11-CC-000110   | Printing over HTTP must be prevented  | This setting blocks Windows 11 from allowing print jobs over HTTP (port 80). In other words, it prevents users or systems from sending print jobs through an unencrypted web connection. Instead, secure methods like HTTPS or other protected protocols should be used |PowerShell | [View Remediation]                                         |
