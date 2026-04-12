@@ -1,1 +1,56 @@
+<#
+.SYNOPSIS
+    This PowerShell scrpt requires Windows to log when a process opens or manipulates a system object handle. This is important because:
+Malware often interacts with system objects before escalating privileges
+Handle access is a key forensic indicator of suspicious activity
 
+.NOTES
+    Author          : Susan Towett
+    LinkedIn        : linkedin.com/in/stowett/
+    GitHub          : github.com/stowett
+    Date Created    : 2026-04-09
+    Last Modified   : 2026-04-09
+    Version         : 1.0
+    CVEs            : N/A
+    Plugin IDs      : N/A
+    STIG-ID         : WN11-AU-000584
+    Documentation   : https://stigaview.com/products/win11/v2r7/WN11-AU-000584/
+
+.TESTED ON
+    Date(s) Tested  : 
+    Tested By       : 
+    Systems Tested  : 
+    PowerShell Ver. : 
+
+.USAGE
+    Put any usage instructions here.
+    Example syntax:
+    PS C:\> .\__remediation_template(STIG-ID-WN11-AU-000584).ps1 
+
+#> # Ensure Administrator
+$IsAdmin = ([Security.Principal.WindowsPrincipal] `
+    [Security.Principal.WindowsIdentity]::GetCurrent()
+).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+
+if (-not $IsAdmin) {
+    Write-Host "Run PowerShell as Administrator." -ForegroundColor Red
+    exit
+}
+
+# Define subcategory (WN11-AU-000584)
+$SubCategory = "Handle Manipulation"
+
+Write-Host "Applying STIG: WN11-AU-000584 -> $SubCategory (Success)" -ForegroundColor Cyan
+
+# Apply STIG setting
+auditpol /set /subcategory:"$SubCategory" /success:enable | Out-Null
+
+# Optional (STIG environments often also enable failure logging for forensics)
+auditpol /set /subcategory:"$SubCategory" /failure:enable | Out-Null
+
+Write-Host "`nVerifying configuration..." -ForegroundColor Yellow
+
+# Verification
+auditpol /get /subcategory:"$SubCategory"
+
+Write-Host "`nSTIG configuration applied successfully." -ForegroundColor Green
