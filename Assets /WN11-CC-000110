@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    This PowerShell script ensures that the maximum size of the Windows Application event log is at least 32768 KB (32 MB).
+    This PowerShell script blocks Windows 11 from allowing print jobs over HTTP (port 80).
 
 .NOTES
     Author          : Susan Towett
@@ -8,11 +8,11 @@
     GitHub          : github.com/stowett
     Date Created    : 2026-04-09
     Last Modified   : 2026-04-09
-    Version         : 1.0
+    Version         : 2.0
     CVEs            : N/A
     Plugin IDs      : N/A
-    STIG-ID         : WN11-AU-000110
-    Documentation   : https://stigaview.com/products/win11/v2r7/WN11-AU-000110/
+    STIG-ID         : WN11-CC-000110
+    Documentation   : https://stigaview.com/products/win11/v2r7/WN11-CC-000110/
 
 .TESTED ON
     Date(s) Tested  : 
@@ -21,9 +21,7 @@
     PowerShell Ver. : 
 
 .USAGE
-    Put any usage instructions here.
-    Example syntax:
-    PS C:\> .\__remediation_template(STIG-ID-WN10-AU-000110).ps1 
+    PS C:\> .\__remediation_template(STIG-ID-WN10-CC-000110).ps1 
 
 #> Create the registry path
 New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers" -Force
