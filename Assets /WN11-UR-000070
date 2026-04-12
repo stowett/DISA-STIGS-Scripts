@@ -1,10 +1,10 @@
 <#
 .SYNOPSIS
     This PowerShell script controls who is explicitly blocked from connecting over the network (SMB, RPC, remote access paths, etc.) 
-This ensures that:
- Highly privileged accounts (like Domain Admins) are blocked from network logon to workstations
- Local accounts are blocked where required (on domain-joined systems)
- Unauthenticated or anonymous access is denied
+ This ensures that:
+ 🔹 Highly privileged accounts (like Domain Admins) are blocked from network logon to workstations
+ 🔹 Local accounts are blocked where required (on domain-joined systems)
+ 🔹 Unauthenticated or anonymous access is denied
     
 .NOTES
     Author          : Susan Towett
