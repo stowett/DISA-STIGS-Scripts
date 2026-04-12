@@ -1,8 +1,8 @@
 <#
 .SYNOPSIS
-    This PowerShell scrpt requires Windows to log when a process opens or manipulates a system object handle. This is important because:
-Malware often interacts with system objects before escalating privileges
-Handle access is a key forensic indicator of suspicious activity
+This PowerShell scrpt requires Windows to log when a process opens or manipulates a system object handle. This is important because:
+🔹Malware often interacts with system objects before escalating privileges
+🔹Handle access is a key forensic indicator of suspicious activity
 
 .NOTES
     Author          : Susan Towett
