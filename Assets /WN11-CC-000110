@@ -39,3 +39,7 @@ New-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers" `
 # Verify:
 Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers"
 
+# You should see the values you created:
+RestrictDriverInstallationToAdministrators = 1
+NoWarningNoElevationOnInstall = 0
+UpdatePromptSettings = 0
