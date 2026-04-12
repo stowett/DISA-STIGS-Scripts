@@ -4,6 +4,7 @@ DISA STIGs are step-by-step security rules and best practices created by the Def
 🔹Reduce vulnerabilities
 🔹Standardize security configurations
 🔹Protect sensitive data, especially for government and military systems
+([Microsoft Windows 11 STIG V2R7](https://stigaview.com/products/win11/latest/))
 
 | STIG ID          | Title                   | Description                   | Script   | Link                                                    
 |------------------|-------------------------|-------------------------------|-----------|-------------
