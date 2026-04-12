@@ -1,1 +1,45 @@
+<#
+.SYNOPSIS
+    This PowerShell script tells Windows to record additional authentication-related activities that don’t fall into the basic logon/logoff categories such as: Special logon events (e.g., elevated privileges), Session reconnections/disconnections, and other authentication behaviors..
 
+.NOTES
+    Author          : Susan Towett
+    LinkedIn        : linkedin.com/in/stowett/
+    GitHub          : github.com/stowett
+    Date Created    : 2026-04-09
+    Last Modified   : 2026-04-09
+    Version         : 1.0
+    CVEs            : N/A
+    Plugin IDs      : N/A
+    STIG-ID         :WN11-AU-000560
+    Documentation   : https://stigaview.com/products/win11/v2r7/WN11-AU-000560/
+
+.TESTED ON
+    Date(s) Tested  : 
+    Tested By       : 
+    Systems Tested  : 
+    PowerShell Ver. : 
+
+.USAGE
+    Put any usage instructions here.
+    Example syntax:
+    PS C:\> .\__remediation_template(STIG-ID-WN11-AU-000560).ps1 
+
+#> # Ensure script runs as Administrator
+$IsAdmin = ([Security.Principal.WindowsPrincipal] `
+    [Security.Principal.WindowsIdentity]::GetCurrent()
+).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+
+if (-not $IsAdmin) {
+    Write-Host "Please run this script as Administrator." -ForegroundColor Red
+    exit
+}
+
+# Apply STIG setting: Enable success auditing for "Other Logon/Logoff Events"
+auditpol /set /subcategory:"Other Logon/Logoff Events" /success:enable
+
+Write-Host "Audit policy applied: Other Logon/Logoff Events (Success Enabled)"
+
+# Verify configuration
+Write-Host "`nVerifying settings..."
+auditpol /get /subcategory:"Other Logon/Logoff Events"
