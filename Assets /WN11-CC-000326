@@ -1,7 +1,7 @@
 <#
 .SYNOPSIS
-    This PowerShell script ensures that Windows 11 does NOT collect excessive telemetry data. 
-    It restricts diagnostic data collection to the minimum required level for Windows Analytics / enterprise management. .
+ This setting enables PowerShell script block logging that records detailed information from the processing of PowerShell commands and scripts. 
+ This can provide additional detail when malware has run on a system
 
 .NOTES
     Author          : Susan Towett
