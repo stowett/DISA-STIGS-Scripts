@@ -1,1 +1,81 @@
+<#
+.SYNOPSIS
+    This PowerShell script ensures that Windows 11 does NOT collect excessive telemetry data. 
+    It restricts diagnostic data collection to the minimum required level for Windows Analytics / enterprise management. .
 
+.NOTES
+    Author          : Susan Towett
+    LinkedIn        : linkedin.com/in/stowett/
+    GitHub          : github.com/stowett
+    Date Created    : 2026-04-09
+    Last Modified   : 2026-04-09
+    Version         : 1.0
+    CVEs            : N/A
+    Plugin IDs      : N/A
+    STIG-ID         : WN11-CC-000204
+    Documentation   : https://stigaview.com/products/win11/v2r7/WN11-CC-000204/
+
+.TESTED ON
+    Date(s) Tested  : 
+    Tested By       : 
+    Systems Tested  : 
+    PowerShell Ver. : 
+
+.USAGE
+    Put any usage instructions here.
+    Example syntax:
+    PS C:\> .\__remediation_template(STIG-ID- WN11-CC-000204).ps1 
+
+#> # ==============================
+# WN11-CC-000204
+# Limit Enhanced Diagnostic Data
+# ==============================
+
+# Ensure Administrator privileges
+$IsAdmin = ([Security.Principal.WindowsPrincipal] `
+    [Security.Principal.WindowsIdentity]::GetCurrent()
+).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+
+if (-not $IsAdmin) {
+    Write-Host "ERROR: Run PowerShell as Administrator." -ForegroundColor Red
+    exit
+}
+
+# Define registry path
+$regPath = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection"
+
+Write-Host "`nApplying STIG WN11-CC-000204..." -ForegroundColor Cyan
+
+# Create registry path if it does not exist
+if (-not (Test-Path $regPath)) {
+    New-Item -Path $regPath -Force | Out-Null
+    Write-Host "Created registry path: $regPath"
+}
+
+# ==============================
+# STIG CONFIGURATION
+# ==============================
+
+# Set telemetry to minimum required level
+New-ItemProperty -Path $regPath `
+    -Name "AllowTelemetry" `
+    -Value 1 -PropertyType DWord -Force
+
+Write-Host "`nTelemetry set to minimum required level (1)."
+
+# Optional hardening (commonly used in enterprise STIG baselines)
+New-ItemProperty -Path $regPath `
+    -Name "DisableEnterpriseAuthProxy" `
+    -Value 1 -PropertyType DWord -Force
+
+New-ItemProperty -Path $regPath `
+    -Name "DoNotShowFeedbackNotifications" `
+    -Value 1 -PropertyType DWord -Force
+
+# ==============================
+# VERIFICATION
+# ==============================
+
+Write-Host "`nVerifying configuration..." -ForegroundColor Yellow
+
+Get-ItemProperty -Path $regPath
