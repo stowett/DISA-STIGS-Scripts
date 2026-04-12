@@ -1,1 +1,82 @@
+<#
+.SYNOPSIS
+    This PowerShell script ensures that DoD Root CA certificates are installed in the Windows Trusted Root Certification Authorities store. 
+    This allows Windows to:
+   🔹 Trust DoD-issued certificates
+   🔹 Validate secure TLS connections to DoD systems
+   🔹 Authenticate secure services (web portals, email, VPN, etc.)
 
+.NOTES
+    Author          : Susan Towett
+    LinkedIn        : linkedin.com/in/stowett/
+    GitHub          : github.com/stowett
+    Date Created    : 2026-04-09
+    Last Modified   : 2026-04-09
+    Version         : 1.0
+    CVEs            : N/A
+    Plugin IDs      : N/A
+    STIG-ID         : WN11-PK-000005
+    Documentation   : https://stigaview.com/products/win11/v2r7/WN11-PK-000005/
+
+.TESTED ON
+    Date(s) Tested  : 
+    Tested By       : 
+    Systems Tested  : 
+    PowerShell Ver. : 
+
+.USAGE
+    Put any usage instructions here.
+    Example syntax:
+    PS C:\> .\__remediation_template(STIG-ID-WN11-PK-000005).ps1 
+
+#> # ==============================
+# WN11-PK-000005
+# Install DoD Root CA Certificates
+# Trusted Root Certification Authorities Store
+# ==============================
+
+# Ensure Administrator privileges
+$IsAdmin = ([Security.Principal.WindowsPrincipal] `
+    [Security.Principal.WindowsIdentity]::GetCurrent()
+).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+
+if (-not $IsAdmin) {
+    Write-Host "ERROR: Run PowerShell as Administrator." -ForegroundColor Red
+    exit
+}
+
+# ==============================
+# Define certificate source folder
+# ==============================
+# Place DoD Root CA .cer files here before running
+$CertPath = "C:\DoD_Certs"
+
+if (-not (Test-Path $CertPath)) {
+    Write-Host "ERROR: Certificate folder not found: $CertPath" -ForegroundColor Red
+    exit
+}
+
+Write-Host "`nImporting DoD Root CA Certificates..." -ForegroundColor Cyan
+
+# ==============================
+# Import certificates into Trusted Root store
+# ==============================
+Get-ChildItem -Path $CertPath -Filter "*.cer" | ForEach-Object {
+
+    Write-Host "Importing: $($_.Name)"
+
+    Import-Certificate `
+        -FilePath $_.FullName `
+        -CertStoreLocation "Cert:\LocalMachine\Root" | Out-Null
+}
+
+# ==============================
+# Verification
+# ==============================
+Write-Host "`nVerifying Trusted Root Store entries..." -ForegroundColor Yellow
+
+Get-ChildItem Cert:\LocalMachine\Root |
+    Where-Object { $_.Subject -match "DoD|DOD" } |
+    Select-Object Subject, Thumbprint
+
+Write-Host "`nWN11-PK-000005 completed successfully." -ForegroundColor Green
