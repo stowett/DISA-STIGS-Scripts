@@ -1,5 +1,9 @@
 # DISA-STIGs-Remediation-Scripts
-
+DISA STIGs stands for Defense Information Systems Agency Security Technical Implementation Guides.
+DISA STIGs are step-by-step security rules and best practices created by the Defense Information Systems Agency (DISA). They are designed to lock down and secure systems like: Windows, Linux, Network devices (routers, switches), Databases (Oracle, SQL Server) and Applications (web servers, browsers). The main goal is to:
+🔹Reduce vulnerabilities
+🔹Standardize security configurations
+🔹Protect sensitive data, especially for government and military systems
 
 | STIG ID          | Title                   | Description                   | Script   | Link                                                    
 |------------------|-------------------------|-------------------------------|-----------|-------------
